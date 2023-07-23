@@ -1,0 +1,299 @@
+<div class="flex justify-between poppins-regular h-[100vh]">
+  <div class="md:w-1/12 w-2/12 bg-[#37404A] poppins-regular  h-[100vh] flex flex-col items-center justify-between py-8 ">
+    <div>
+      <%= live_redirect(to: Routes.page_index_path(@socket, :index)) do %>
+        <%= Heroicons.icon("chat-bubble-left-right",
+          type: "solid",
+          class: "h-8 text-[#7269EF] w-8"
+        ) %>
+      <% end %>
+    </div>
+
+    <div class="flex flex-col items-center justify-center gap-4">
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= live_redirect(to: Routes.chat_index_path(@socket, :index)) do %>
+          <%= Heroicons.icon("chat-bubble-oval-left-ellipsis",
+            type: "solid",
+            class:
+              "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= live_redirect(to: Routes.group_index_path(@socket, :index)) do %>
+          <%= Heroicons.icon("user-group",
+            type: "solid",
+            class:
+              "h-8 text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+
+      <%= if @current_user.role == "manager" do %>
+        <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+          <%= live_redirect(to: Routes.task_index_path(@socket, :index)) do %>
+            <%= Heroicons.icon("briefcase",
+              type: "solid",
+              class:
+                "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+            ) %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+          <%= live_redirect(to: Routes.task_mytasks_path(@socket, :show, @current_user))  do %>
+            <%= Heroicons.icon("rectangle-stack",
+              type: "solid",
+              class: "h-8  text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+            ) %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= live_redirect(to: Routes.event_index_path(@socket, :index)) do %>
+          <%= Heroicons.icon("calendar-days",
+            type: "solid",
+            class:
+              "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+      <%= if @current_user.role == "manager" do %>
+        <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+          <%= live_redirect(to: Routes.chat_index_path(@socket, :newgroup)) do %>
+            <%= Heroicons.icon("plus",
+              type: "solid",
+              class:
+                "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+            ) %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= if @current_user.email == "admin@gmail.com" do %>
+        <div class="flex flex-col items-center justify-center gap-4">
+          <div class="bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+            <%= live_redirect(to: Routes.admin_panel_index_path(@socket, :index)) do %>
+              <%= Heroicons.icon("building-library",
+                type: "solid",
+                class:
+                  "h-8  text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+              ) %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex flex-col justify-center items-center gap-4">
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= link(to: Routes.user_session_path(@socket, :delete), method: :delete) do %>
+          <%= Heroicons.icon("power",
+            type: "solid",
+            class:
+              "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="w-11/12 flex flex-col md:flex-row bg-[#262E35]   ">
+    <div class="md:w-[50%] w-[100%] border-r-2 border-white flex flex-col md:h-[100vh] overflow-y-scroll">
+      <div class="bg-[#262E35] border-gray-200 border-b-2 flex justify-between items-center  p-4  h-[10%] w-[100%]">
+        <div class="flex text-white gap-2 items-center">
+          Pending Tasks
+        </div>
+      </div>
+      <div class="bg-[#262E35] h-[90%] flex items-start overflow-y-scroll  p-4  w-[100%]">
+        <div class="flex flex-col w-[95%] mx-auto   gap-4">
+          <%= if @pending_tasks != [] do %>
+            <%= for task <- @pending_tasks do %>
+              <div class=" p-4 rounded-md bg-[#303841]">
+                <div class="w-[100%] bg-[#37404A] flex poppins-regular flex-col justify-between gap-1 p-2 shadow-md hover:shadow-gray-300   cursor-pointer transition-all ease-in-out duration-500 h-[150px]">
+                  <div class="flex flex-col gap-1 w-[100%]">
+                    <div class="flex justify-between items-center">
+                      <p class="text-[#7269EF] uppercase text-xl">
+                        <%= task.title %>
+                      </p>
+                    </div>
+                    <div class="text-[#EFF2F7] break-words text-xs">
+                      <%= task.description %>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-row gap-4">
+                    <div class="flex flex-row items-center">
+                      <p class="py-2 text-[#EFF2F7] pr-2">
+                        Due date:
+                      </p>
+                      <p class="px-4 bg-[#7269EF] text-white text-sm py-2">
+                        <%= task.due_date %>
+                      </p>
+                    </div>
+                    <div class="flex items-center flex-row">
+                      <p class="px-4 text-[#EFF2F7] py-2">
+                        Status:
+                      </p>
+                      <p>
+                        <%= if task.status == "pending" do %>
+                          <p class="bg-white text-[#262E35] text-sm px-2 py-2">
+                            <%= task.status %>
+                          </p>
+                        <% else %>
+                          <p class="bg-[#7269EF] text-white text-sm px-2 py-2">
+                            <%= task.status %>
+                          </p>
+                        <% end %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <%= if task.reviews != [] do %>
+                  <p class=" my-2 px-4 text-[#EFF2F7]">
+                    Reviews
+                  </p>
+                <% end %>
+
+                <div class="grid grid-cols-2 px-4  gap-8">
+                  <%= for review <- task.reviews do %>
+                    <div class="bg-white cursor-pointer  hover:scale-105 duration-500 ease-in-out transition-all  h-[80px] p-2 flex justify-between text-sm w-[100%]">
+                      <div class="flex flex-col justify-between">
+                        <p>
+                          <%= review.comments %>
+                        </p>
+                      </div>
+
+                      <div class="flex flex-row">
+                        <%!-- stars here  --%>
+
+                        <%= for i <- 1..review.score do %>
+                          <%= Heroicons.icon("star",
+                            type: "solid",
+                            class: "h-4 text-yellow-400 w-4"
+                          ) %>
+                        <% end %>
+                        <%= if review.score != 5 do %>
+                          <%= for i <- 1..(5-review.score) do %>
+                            <%= Heroicons.icon("star",
+                              type: "solid",
+                              class: "h-4 text-gray-300 w-4"
+                            ) %>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-[#7269EF]">
+              You have no Pending Tasks
+            </p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="md:w-[50%] w-[100%] border-r-2 border-white flex flex-col md:h-[100vh] overflow-y-scroll">
+      <div class="bg-[#262E35] border-gray-200 border-b-2 flex justify-between items-center  p-4  h-[10%] w-[100%]">
+        <div class="flex gap-2 text-white items-center">
+          Completed Tasks
+        </div>
+      </div>
+      <div class="bg-[#262E35] h-[90%] flex items-start overflow-y-scroll  p-4  w-[100%]">
+        <div class="flex flex-col w-[95%] mx-auto   gap-4">
+          <%= if @completed_tasks != [] do %>
+            <%= for task <- @completed_tasks do %>
+              <div class=" p-4 rounded-md bg-[#303841]">
+                <div class="w-[100%] bg-[#37404A] flex poppins-regular flex-col justify-between gap-1 p-2 shadow-md hover:shadow-gray-300   cursor-pointer transition-all ease-in-out duration-500 md:h-[150px]">
+                  <div class="flex flex-col gap-1 w-[100%]">
+                    <div class="flex justify-between items-center">
+                      <p class="text-[#7269EF] uppercase text-xl">
+                        <%= task.title %>
+                      </p>
+                    </div>
+                    <div class="text-[#EFF2F7] break-words text-xs">
+                      <%= task.description %>
+                    </div>
+                  </div>
+
+                  <div class="flex md:flex-row  flex-col gap-4">
+                    <div class="flex flex-row items-center">
+                      <p class="py-2 text-[#EFF2F7] pr-2">
+                        Due date:
+                      </p>
+                      <p class="px-4 bg-[#7269EF] text-white text-sm py-2">
+                        <%= task.due_date %>
+                      </p>
+                    </div>
+                    <div class="flex items-center flex-row">
+                      <p class="md:px-4 pr-2 md:pr-0 text-[#EFF2F7] py-2">
+                        Status:
+                      </p>
+                      <p>
+                        <%= if task.status == "pending" do %>
+                          <p class="bg-white text-[#262E35] text-sm px-2 py-2">
+                            <%= task.status %>
+                          </p>
+                        <% else %>
+                          <p class="bg-[#7269EF] text-white text-sm px-2 py-2">
+                            <%= task.status %>
+                          </p>
+                        <% end %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <%= if task.reviews != [] do %>
+                  <p class=" my-2 px-4 text-[#EFF2F7]">
+                    Reviews
+                  </p>
+                <% end %>
+
+                <div class="grid md:grid-cols-2 px-4  gap-8">
+                  <%= for review <- task.reviews do %>
+                    <div class="bg-white cursor-pointer  hover:scale-105 duration-500 ease-in-out transition-all  h-[80px] p-2 flex justify-between text-sm w-[100%]">
+                      <div class="flex flex-col justify-between">
+                        <p>
+                          <%= review.comments %>
+                        </p>
+                      </div>
+
+                      <div class="flex flex-row">
+                        <%!-- stars here  --%>
+
+                        <%= for i <- 1..review.score do %>
+                          <%= Heroicons.icon("star",
+                            type: "solid",
+                            class: "h-4 text-yellow-400 w-4"
+                          ) %>
+                        <% end %>
+                        <%= if review.score != 5 do %>
+                          <%= for i <- 1..(5-review.score) do %>
+                            <%= Heroicons.icon("star",
+                              type: "solid",
+                              class: "h-4 text-gray-300 w-4"
+                            ) %>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-[#7269EF]">
+              You have no completed Tasks
+            </p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

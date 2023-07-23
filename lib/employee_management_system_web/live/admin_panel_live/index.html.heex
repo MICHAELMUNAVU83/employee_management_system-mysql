@@ -1,0 +1,175 @@
+<div class="flex justify-between poppins-regular h-[100vh]">
+  <div class="md:w-1/12 w-2/12 bg-[#37404A] poppins-regular  h-[100vh] flex flex-col items-center justify-between py-8 ">
+    <div class="p-4">
+      <%= live_redirect(to: Routes.page_index_path(@socket, :index)) do %>
+        <%= Heroicons.icon("chat-bubble-left-right",
+          type: "solid",
+          class: "h-8 text-[#7269EF] w-8"
+        ) %>
+      <% end %>
+    </div>
+
+    <div class="flex flex-col items-center justify-center gap-4">
+      <div class="bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= live_redirect(to: Routes.chat_index_path(@socket, :index)) do %>
+          <%= Heroicons.icon("chat-bubble-oval-left-ellipsis",
+            type: "solid",
+            class: "h-8  text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= live_redirect(to: Routes.group_index_path(@socket, :index)) do %>
+          <%= Heroicons.icon("user-group",
+            type: "solid",
+            class:
+              "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= live_redirect(to: Routes.task_index_path(@socket, :index)) do %>
+          <%= Heroicons.icon("briefcase",
+            type: "solid",
+            class:
+              "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= live_redirect(to: Routes.task_mytasks_path(@socket, :show, @current_user))  do %>
+          <%= Heroicons.icon("rectangle-stack",
+            type: "solid",
+            class:
+              "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= live_redirect(to: Routes.event_index_path(@socket, :index)) do %>
+          <%= Heroicons.icon("calendar-days",
+            type: "solid",
+            class:
+              "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= live_redirect(to: Routes.chat_index_path(@socket, :newgroup)) do %>
+          <%= Heroicons.icon("plus",
+            type: "solid",
+            class:
+              "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+      <%= if @current_user.email == "admin@gmail.com" do %>
+        <div class="flex flex-col items-center justify-center gap-4">
+          <div class="bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+            <%= live_redirect(to: Routes.admin_panel_index_path(@socket, :index)) do %>
+              <%= Heroicons.icon("building-library",
+                type: "solid",
+                class:
+                  "h-8  text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+              ) %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex flex-col justify-center items-center gap-4">
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= link(to: Routes.user_session_path(@socket, :delete), method: :delete) do %>
+          <%= Heroicons.icon("power",
+            type: "solid",
+            class:
+              "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="md:w-4/12 w-10/12  bg-[#303841] text-[#EFF2F7] flex flex-col gap-8  h-[100vh] overflow-y-scroll py-8  px-4">
+    <div class="flex flex-col gap-4">
+      <%= if @managers != [] do %>
+        <p class="text-sm poppins-bold font-bold">
+          Department Managers
+        </p>
+      <% end %>
+
+      <%= for user <- @managers do %>
+        <%= live_redirect(to: Routes.admin_panel_show_path(@socket, :show, user))  do %>
+          <div class="flex justify-between hover:bg-[#35404A] transition-all duration-500 ease-in-out p-4 cursor-pointer items-start w-[100%]">
+            <div class="flex gap-2 items-start">
+              <div class=" w-[40px] h-[40px]  ">
+                <%= img_tag(
+                  EmployeeManagementSystem.ProfilePhoto.url({user.photo, {user}},
+                    signed: true
+                  ),
+                  class: " w-[40px] h-[40px] object-cover  rounded-full "
+                ) %>
+              </div>
+
+              <div class="h-[24px] flex flex-col justify-between">
+                <p class="text-sm text-[#EFF2F7]">
+                  <%= user.first_name <> " " <> user.last_name %>
+                </p>
+                <p class="text-xs poppins-light text-[#A9B2D0]">
+                  <%= user.department %> Department
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="flex flex-col gap-4">
+      <%= if @employees != [] do %>
+        <p class="text-sm poppins-bold font-bold">
+          Employees
+        </p>
+      <% end %>
+      <%= for user <- @employees do %>
+        <%= live_redirect(to: Routes.admin_panel_show_path(@socket, :show, user))  do %>
+          <div class="flex justify-between hover:bg-[#35404A] transition-all duration-500 ease-in-out p-4 cursor-pointer items-start w-[100%]">
+            <div class="flex gap-2 items-start">
+              <div class=" w-[40px] h-[40px]  ">
+                <%= img_tag(
+                  EmployeeManagementSystem.ProfilePhoto.url({user.photo, {user}},
+                    signed: true
+                  ),
+                  class: " w-[40px] h-[40px] object-cover  rounded-full "
+                ) %>
+              </div>
+
+              <div class="h-[24px] flex flex-col justify-between">
+                <p class="text-sm text-[#EFF2F7]">
+                  <%= user.first_name <> " " <> user.last_name %>
+                </p>
+                <p class="text-xs poppins-light text-[#A9B2D0]">
+                  <%= user.department %> Department
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="md:w-7/12 bg-[#262E35]  overflow-y-scroll h-[100vh] hidden md:flex justify-center items-center ">
+    <div>
+      <%= Heroicons.icon("briefcase",
+        type: "solid",
+        class: "h-48  text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-48"
+      ) %>
+    </div>
+  </div>
+</div>

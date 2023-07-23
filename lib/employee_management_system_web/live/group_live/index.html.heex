@@ -1,0 +1,205 @@
+<%!-- <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Department</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="groups">
+    <%= for group <- @groups do %>
+      <tr id={"group-#{group.id}"}>
+        <td><%= group.name %></td>
+        <td><%= group.description %></td>
+        <td><%= group.department %></td>
+
+        <td>
+          <span>
+            <%= live_redirect("Show", to: Routes.group_show_path(@socket, :show, group)) %>
+          </span>
+          <span>
+            <%= live_patch("Edit", to: Routes.group_index_path(@socket, :edit, group)) %>
+          </span>
+          <span>
+            <%= link("Delete",
+              to: "#",
+              phx_click: "delete",
+              phx_value_id: group.id,
+              data: [confirm: "Are you sure?"]
+            ) %>
+          </span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table> --%>
+
+<div class="flex justify-between h-[100vh]">
+  <div class="md:w-1/12 w-2/12 bg-[#37404A] poppins-regular  h-[100vh] flex flex-col items-center justify-between py-8 ">
+    <div>
+      <%= live_redirect(to: Routes.page_index_path(@socket, :index)) do %>
+        <%= Heroicons.icon("chat-bubble-left-right",
+          type: "solid",
+          class: "h-8 text-[#7269EF] w-8"
+        ) %>
+      <% end %>
+    </div>
+
+    <div class="flex flex-col items-center justify-center gap-4">
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= live_redirect(to: Routes.chat_index_path(@socket, :index)) do %>
+          <%= Heroicons.icon("chat-bubble-oval-left-ellipsis",
+            type: "solid",
+            class:
+              "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+
+      <div class="bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= live_redirect(to: Routes.group_index_path(@socket, :index)) do %>
+          <%= Heroicons.icon("user-group",
+            type: "solid",
+            class: "h-8 text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+
+      <%= if @current_user.role == "manager" do %>
+        <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+          <%= live_redirect(to: Routes.task_index_path(@socket, :index)) do %>
+            <%= Heroicons.icon("briefcase",
+              type: "solid",
+              class:
+                "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+            ) %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+          <%= live_redirect(to: Routes.task_mytasks_path(@socket, :show, @current_user))  do %>
+            <%= Heroicons.icon("rectangle-stack",
+              type: "solid",
+              class:
+                "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+            ) %>
+          <% end %>
+        </div>
+      <% end %>
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= live_redirect(to: Routes.event_index_path(@socket, :index)) do %>
+          <%= Heroicons.icon("calendar-days",
+            type: "solid",
+            class:
+              "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+
+      <%= if @current_user.role == "manager" do %>
+        <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+          <%= live_redirect(to: Routes.chat_index_path(@socket, :newgroup)) do %>
+            <%= Heroicons.icon("plus",
+              type: "solid",
+              class:
+                "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+            ) %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= if @current_user.email == "admin@gmail.com" do %>
+        <div class="flex flex-col items-center justify-center gap-4">
+          <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+            <%= live_redirect(to: Routes.admin_panel_index_path(@socket, :index)) do %>
+              <%= Heroicons.icon("building-library",
+                type: "solid",
+                class:
+                  "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+              ) %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex flex-col justify-center items-center gap-4">
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= link(to: Routes.user_session_path(@socket, :delete), method: :delete) do %>
+          <%= Heroicons.icon("power",
+            type: "solid",
+            class:
+              "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="md:w-4/12 w-10/12 bg-[#303841] flex flex-col text-[#EFF2F7] gap-8  h-[100vh] overflow-y-scroll py-8  px-4">
+    <p class="text-2xl poppins-bold font-bold">
+      Groups
+    </p>
+
+    <div className="py-5">
+      <label for="default-search" class="mb-2 text-sm font-medium text-[#808AA2] sr-only ">
+        Search
+      </label>
+      <div class="relative">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <svg
+            aria-hidden="true"
+            class="w-5 h-5 text-[#808AA2]"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            >
+            </path>
+          </svg>
+        </div>
+        <.form let={f} id="search-group" phx-change="search-group" for={@search_changeset}>
+          <%= text_input(f, :search,
+            placeholder: "Search",
+            class:
+              "block w-full px-4 pl-10 text-sm border border-transparent  focus:ring-0   bg-[#37404A] border-none h-[40px] "
+          ) %>
+        </.form>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <%= for group <- @groups do %>
+        <%= live_redirect(to: Routes.group_show_path(@socket, :show, group))  do %>
+          <div class="flex justify-between items-start w-[100%]">
+            <div class="flex gap-2 w-[100%] hover:bg-[#35404A]  transition-opacity duration-500 ease-in-out cursor-pointer p-2 items-center">
+              <div class="h-[60px] w-[60px] bg-[#2E2A60] text-xl text-[#7269EF] flex justify-center items-center uppercase poppins-bold rounded-full">
+                <%= String.slice(group.name, 0, 1) %>
+              </div>
+              <div class="h-[24px] flex flex-col justify-between">
+                <p class="font-bold uppercase text-xl poppins-regular">
+                  # <%= group.name %>
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="w-7/12 bg-[#262E35]  overflow-y-scroll h-[100vh] hidden md:flex justify-center items-center ">
+    <%= Heroicons.icon("user-group",
+      type: "solid",
+      class: "h-48  text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-48"
+    ) %>
+  </div>
+</div>

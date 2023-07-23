@@ -1,0 +1,77 @@
+<div>
+  <.form
+    let={f}
+    for={@changeset}
+    id="event-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save"
+  >
+    <p class="text-[#7269EF] text-center text-xl poppins-regular">
+      Add an Event
+    </p>
+
+    <div class="flex flex-col my-8 w-[70%] mx-auto">
+      <div class="flex flex-col w-[100%]">
+        <%= label(f, :name, class: "text-[#eff2f7] poppins-regular") %>
+        <%= text_input(f, :name,
+          class:
+            "w-[100%] h-[45px] bg-[#eff2f7] poppins-regular text-[#37404A] border border-transparent   focus:ring-0 border-none"
+        ) %>
+        <p class="pt-5">
+          <%= error_tag(f, :name) %>
+        </p>
+      </div>
+
+      <div class="flex flex-col w-[100%]">
+        <%= label(f, :description, class: "text-[#eff2f7] poppins-regular") %>
+        <%= textarea(f, :description,
+          class:
+            "w-[100%] h-[100px] bg-[#eff2f7] poppins-regular text-[#37404A] border border-transparent   focus:ring-0 border-none"
+        ) %>
+        <p class="pt-5">
+          <%= error_tag(f, :description) %>
+        </p>
+      </div>
+
+      <div class="flex flex-col w-[100%]">
+        <%= label(f, :date_of_the_event, class: "text-[#eff2f7] poppins-regular") %>
+        <%= date_input(f, :date,
+          class:
+            "w-[100%] h-[45px] bg-[#eff2f7] poppins-regular text-[#37404A] border border-transparent   focus:ring-0 border-none"
+        ) %>
+        <p class="pt-5">
+          <%= error_tag(f, :date) %>
+        </p>
+      </div>
+
+      <%= label(f, :image, class: "text-[#eff2f7] poppins-regular") %>
+      <%= live_file_input(@uploads.event_image,
+        class:
+          "w-[100%] h-[45px] bg-[#eff2f7] poppins-regular text-[#37404A] border border-transparent p-2  focus:ring-0 border-none"
+      ) %>
+
+      <%= for entry <- @uploads.event_image.entries do %>
+        <div class="flex flex-col my-2">
+          <%= live_img_preview(entry, class: "w-[100%] h-[300px] object-cover") %>
+          <button
+            type="button"
+            phx-click="cancel-upload"
+            phx-value-ref={entry.ref}
+            class="bg-white poppins-regular p-2 rounded-l-md rounded-r-md rounded-b-md"
+          >
+            Cancel
+          </button>
+        </div>
+      <% end %>
+
+      <div class="flex justify-center my-4 items-center">
+        <%= submit("Save",
+          phx_disable_with: "Saving...",
+          class:
+            "bg-[#7269EF]  px-4 py-2 text-[#eff2f7] text-xl hover:scale-105 transition-all ease-in-out duration-500 poppins-regular cursor-pointer"
+        ) %>
+      </div>
+    </div>
+  </.form>
+</div>

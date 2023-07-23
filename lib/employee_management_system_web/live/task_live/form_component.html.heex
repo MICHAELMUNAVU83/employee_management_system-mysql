@@ -1,0 +1,69 @@
+<div>
+  <.form
+    let={f}
+    for={@changeset}
+    id="task-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save"
+  >
+    <p class="text-[#7269EF] text-center text-xl poppins-regular">
+      Assign A Task to <%= @user.first_name %>
+    </p>
+    <div class="flex flex-col my-8 w-[70%] mx-auto">
+      <div class="flex flex-col w-[100%]">
+        <%= label(f, :title, class: "text-[#eff2f7] poppins-regular") %>
+        <%= text_input(f, :title,
+          class:
+            "w-[100%] h-[45px] bg-[#eff2f7] poppins-regular text-[#37404A] border border-transparent   focus:ring-0 border-none"
+        ) %>
+        <p class="pt-5">
+          <%= error_tag(f, :title) %>
+        </p>
+      </div>
+      <div class="flex flex-col w-[100%]">
+        <%= label(f, :description, class: "text-[#eff2f7] poppins-regular") %>
+        <%= textarea(f, :description,
+          class:
+            "w-[100%] h-[100px] bg-[#eff2f7] poppins-regular text-[#37404A] border border-transparent   focus:ring-0 border-none"
+        ) %>
+        <p class="pt-5">
+          <%= error_tag(f, :description) %>
+        </p>
+      </div>
+
+      <div class="flex flex-col w-[100%]">
+        <%= label(f, :due_date, class: "text-[#eff2f7] poppins-regular") %>
+        <%= date_input(f, :due_date,
+          class:
+            "w-[100%] h-[45px] bg-[#eff2f7] poppins-regular text-[#37404A] border border-transparent   focus:ring-0 border-none"
+        ) %>
+        <p class="pt-5">
+          <%= error_tag(f, :due_date) %>
+        </p>
+      </div>
+
+      <%= if @action in [:edit] do %>
+        <div class="flex flex-col w-[100%]">
+          <%= label(f, :status, class: "text-[#eff2f7] poppins-regular") %>
+          <%= select(f, :status, ["pending", "completed"],
+            prompt: "Select Status",
+            class:
+              "w-[100%] h-[45px] bg-[#eff2f7] poppins-regular text-[#37404A] border border-transparent   focus:ring-0 border-none"
+          ) %>
+          <%= error_tag(f, :status) %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= hidden_input(f, :user_id, value: @user.id) %>
+
+    <div class="flex justify-center items-center">
+      <%= submit("Save",
+        phx_disable_with: "Saving...",
+        class:
+          "bg-[#7269EF]  px-4 py-2 text-[#eff2f7] text-xl hover:scale-105 transition-all ease-in-out duration-500 poppins-regular cursor-pointer"
+      ) %>
+    </div>
+  </.form>
+</div>

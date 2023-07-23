@@ -1,0 +1,52 @@
+<h1>Listing Reviews</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.review_index_path(@socket, :index)}>
+    <.live_component
+      module={EmployeeManagementSystemWeb.ReviewLive.FormComponent}
+      id={@review.id || :new}
+      title={@page_title}
+      action={@live_action}
+      review={@review}
+      return_to={Routes.review_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Comments</th>
+      <th>Score</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="reviews">
+    <%= for review <- @reviews do %>
+      <tr id={"review-#{review.id}"}>
+        <td><%= review.comments %></td>
+        <td><%= review.score %></td>
+
+        <td>
+          <span>
+            <%= live_redirect("Show", to: Routes.review_show_path(@socket, :show, review)) %>
+          </span>
+          <span>
+            <%= live_patch("Edit", to: Routes.review_index_path(@socket, :edit, review)) %>
+          </span>
+          <span>
+            <%= link("Delete",
+              to: "#",
+              phx_click: "delete",
+              phx_value_id: review.id,
+              data: [confirm: "Are you sure?"]
+            ) %>
+          </span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch("New Review", to: Routes.review_index_path(@socket, :new)) %></span>

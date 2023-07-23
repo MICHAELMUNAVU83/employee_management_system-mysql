@@ -1,0 +1,54 @@
+<div>
+  <p class="text-[#7269EF] text-center text-xl poppins-regular">
+    Add  A Review for This task
+  </p>
+
+  <.form
+    let={f}
+    for={@changeset}
+    id="review-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save"
+  >
+    <div class="flex flex-col my-8 w-[70%] mx-auto">
+      <div class="flex flex-col w-[100%]">
+        <%= label(f, :comments, class: "text-[#eff2f7] poppins-regular") %>
+        <%= text_input(f, :comments,
+          class:
+            "w-[100%] h-[45px] bg-[#eff2f7] poppins-regular text-[#37404A] border border-transparent   focus:ring-0 border-none"
+        ) %>
+
+        <p class="pt-5">
+          <%= error_tag(f, :comments) %>
+        </p>
+      </div>
+
+      <div class="flex flex-col w-[100%]">
+        <%= label(f, :score, class: "text-[#eff2f7] poppins-regular") %>
+        <%= number_input(f, :score,
+          class:
+            "w-[100%] h-[45px] bg-[#eff2f7] poppins-regular text-[#37404A] border border-transparent   focus:ring-0 border-none"
+        ) %>
+
+        <p class="text-gray-200 text-sm my-2">
+          Score should be between 1 and 5 with 0 being the lowest and 5 being the highest
+        </p>
+
+        <p class="pt-5">
+          <%= error_tag(f, :score) %>
+        </p>
+      </div>
+
+      <%= hidden_input(f, :task_id, value: @task.id) %>
+
+      <div class="flex justify-center items-center">
+        <%= submit("Save",
+          phx_disable_with: "Saving...",
+          class:
+            "bg-[#7269EF]  px-4 py-2 text-[#eff2f7] text-xl hover:scale-105 transition-all ease-in-out duration-500 poppins-regular cursor-pointer"
+        ) %>
+      </div>
+    </div>
+  </.form>
+</div>

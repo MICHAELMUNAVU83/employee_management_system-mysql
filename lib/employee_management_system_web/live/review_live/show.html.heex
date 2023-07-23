@@ -1,0 +1,32 @@
+<h1>Show Review</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.review_show_path(@socket, :show, @review)}>
+    <.live_component
+      module={EmployeeManagementSystemWeb.ReviewLive.FormComponent}
+      id={@review.id}
+      title={@page_title}
+      action={@live_action}
+      review={@review}
+      return_to={Routes.review_show_path(@socket, :show, @review)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+  <li>
+    <strong>Comments:</strong>
+    <%= @review.comments %>
+  </li>
+
+  <li>
+    <strong>Score:</strong>
+    <%= @review.score %>
+  </li>
+</ul>
+
+<span>
+  <%= live_patch("Edit", to: Routes.review_show_path(@socket, :edit, @review), class: "button") %>
+</span>
+|
+<span><%= live_redirect("Back", to: Routes.review_index_path(@socket, :index)) %></span>

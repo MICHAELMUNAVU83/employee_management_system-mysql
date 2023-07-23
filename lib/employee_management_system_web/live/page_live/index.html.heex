@@ -1,0 +1,93 @@
+<%!-- hbnjmk,l <%= live_redirect("Chats", to: Routes.chat_index_path(@socket, :index)) %>
+
+<%= live_redirect("Tasks", to: Routes.task_index_path(@socket, :index)) %>
+
+<ul>
+  <%= if @current_user != "" do %>
+    <li><%= link("Settings", to: Routes.user_settings_path(@socket, :edit)) %></li>
+    <li>
+      <%= link("Log out", to: Routes.user_session_path(@socket, :delete), method: :delete) %>
+    </li>
+  <% else %>
+    <li><%= link("Register", to: Routes.user_registration_path(@socket, :new)) %></li>
+    <li><%= link("Log in", to: Routes.user_session_path(@socket, :new)) %></li>
+  <% end %>
+</ul> --%>
+
+<div class="h-[100vh] w-[100%] bg-gradient-to-b from-[#37404A]  via-[#7269EF]  to-[#262E35]">
+  <div class="bg-black/50 h-[100vh] py-8 flex justify-between flex-col items-center w-[100%]">
+    <div class="flex justify-center items-center flex-col gap-1">
+      <p class="text-[#7269EF] flex  gap-1 text-center md:text-3xl text-base poppins-regular">
+        <%= Heroicons.icon("chat-bubble-left-right",
+          type: "solid",
+          class: "h-6 text-[#7269EF] w-6 -rotate-12"
+        ) %> EngagePro Employee Management System
+      </p>
+
+      <p class="md:w-[60%] w-[90%] md:text-sm text-xs poppins-regular py-4 mx-auto text-center text-[#EFF2F7] ">
+        EngagePro is an employee engagement app designed to improve communication, collaboration, and engagement in the workplace. The app provides a platform for employees to connect with each other, share ideas, provide feedback on various company initiatives and keep up on upcoming company events.
+      </p>
+    </div>
+
+    <%= if @current_user != "" do %>
+      <%= live_redirect( to: Routes.chat_index_path(@socket, :index)) do %>
+        <button class="px-4 py-2 my-2 bg-[#EFF2F7] text-[#37404A] hover:scale-105 transition-all ease-in-out duration-500 cursor-pointer poppins-regular">
+          Get Started
+        </button>
+      <% end %>
+    <% else %>
+      <%= link(to: Routes.user_session_path(@socket, :new)) do %>
+        <button class="px-4 py-2 my-2 bg-[#EFF2F7] text-[#37404A] hover:scale-105 transition-all ease-in-out duration-500 cursor-pointer poppins-regular">
+          Get Started
+        </button>
+      <% end %>
+    <% end %>
+
+    <div class="w-[90%] mx-auto gap-8 grid grid-cols-2 md:grid-cols-4">
+      <div class="md:h-[200px] h-[150px] hover:scale-105 transition-all ease-in-out duration-500  cursor-pointer  w-[100%] flex flex-col justify-center items-center  ">
+        <%= Heroicons.icon("chat-bubble-oval-left-ellipsis",
+          type: "solid",
+          class:
+            "md:h-48 h-32  text-[#A6B0CF] group-hover:text-[#7269EF] bg-white p-4 transition-all duration-500 ease-in-out rounded-full md:w-48 w-23"
+        ) %>
+        <p class="text-white poppins-regular">
+          Communicate
+        </p>
+      </div>
+      <div class="md:h-[200px] h-[150px] hover:scale-105 transition-all ease-in-out duration-500  cursor-pointer  w-[100%] flex flex-col justify-center items-center  ">
+        <%= Heroicons.icon("user-group",
+          type: "solid",
+          class:
+            "md:h-48 h-32  text-[#A6B0CF] group-hover:text-[#7269EF] bg-white p-4 transition-all duration-500 ease-in-out rounded-full md:w-48 w-32"
+        ) %>
+        <p class="text-white poppins-regular">
+          Form Groups
+        </p>
+      </div>
+      <div class="md:h-[200px] h-[150px] hover:scale-105 transition-all ease-in-out duration-500  cursor-pointer  w-[100%] flex flex-col justify-center items-center  ">
+        <%= Heroicons.icon("clipboard",
+          type: "solid",
+          class:
+            "md:h-48 h-32  text-[#A6B0CF] group-hover:text-[#7269EF] bg-white p-4 transition-all duration-500 ease-in-out rounded-full md:w-48 w-32"
+        ) %>
+        <p class="text-white poppins-regular">
+          Assign Tasks
+        </p>
+      </div>
+      <div class="md:h-[200px] h-[150px] hover:scale-105 transition-all ease-in-out duration-500  cursor-pointer  w-[100%] flex flex-col justify-center items-center  ">
+        <%= Heroicons.icon("calendar-days",
+          type: "solid",
+          class:
+            "md:h-48 h-32  text-[#A6B0CF] group-hover:text-[#7269EF] bg-white p-4 transition-all duration-500 ease-in-out rounded-full md:w-48 w-32"
+        ) %>
+        <p class="text-white poppins-regular">
+          Schedule Events
+        </p>
+      </div>
+    </div>
+
+    <div class="flex text-white justify-center text-sm md:text-base items-center text-center">
+      EngagePro: Where collaboration meets motivation, transforming workplaces into thriving communities!
+    </div>
+  </div>
+</div>

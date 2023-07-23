@@ -1,0 +1,47 @@
+<div>
+  <.form
+    let={f}
+    for={@changeset}
+    id="group-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save"
+  >
+    <p class="text-[#7269EF] text-center text-xl poppins-regular">
+      Edit Group
+    </p>
+    <div class="flex p-4 md:flex-row flex-col justify-between w-[100%]">
+      <div class="flex flex-col w-[100%] md:w-[48%]">
+        <%= label(f, :name, class: "text-[#eff2f7] poppins-regular") %>
+        <%= text_input(f, :name,
+          class:
+            "w-[100%] h-[45px] bg-[#eff2f7] poppins-regular text-[#37404A] border border-transparent   focus:ring-0 border-none"
+        ) %>
+        <p class="pt-5">
+          <%= error_tag(f, :name) %>
+        </p>
+      </div>
+
+      <div class="flex flex-col w-[100%] md:w-[48%]">
+        <%= label(f, :description, class: "text-[#eff2f7] poppins-regular") %>
+        <%= text_input(f, :description,
+          class:
+            "w-[100%] h-[45px] bg-[#eff2f7] poppins-regular text-[#37404A] border border-transparent   focus:ring-0 border-none"
+        ) %>
+        <p class="pt-5">
+          <%= error_tag(f, :description) %>
+        </p>
+      </div>
+    </div>
+
+    <%= hidden_input(f, :department, value: @current_user.department) %>
+
+    <div class="flex justify-center items-center">
+      <%= submit("Save",
+        phx_disable_with: "Saving...",
+        class:
+          "bg-[#7269EF]  px-4 py-2 text-[#eff2f7] text-xl hover:scale-105 transition-all ease-in-out duration-500 poppins-regular cursor-pointer"
+      ) %>
+    </div>
+  </.form>
+</div>

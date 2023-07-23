@@ -1,0 +1,12 @@
+<div>
+  <h2><%= @title %></h2>
+  <.form let={f} for={@image_changeset} phx-submit="save_text">
+    <%= label(f, :text) %>
+    <%= text_input(f, :text) %>
+    <%= error_tag(f, :text) %>
+
+    <div>
+      <%= submit("Save", phx_disable_with: "Saving...") %>
+    </div>
+  </.form>
+</div>

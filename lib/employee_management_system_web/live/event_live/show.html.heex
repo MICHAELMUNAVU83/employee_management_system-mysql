@@ -1,0 +1,42 @@
+<h1>Show Event</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.event_show_path(@socket, :show, @event)}>
+    <.live_component
+      module={EmployeeManagementSystemWeb.EventLive.FormComponent}
+      id={@event.id}
+      title={@page_title}
+      action={@live_action}
+      event={@event}
+      return_to={Routes.event_show_path(@socket, :show, @event)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+  <li>
+    <strong>Name:</strong>
+    <%= @event.name %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @event.description %>
+  </li>
+
+  <li>
+    <strong>Date:</strong>
+    <%= @event.date %>
+  </li>
+
+  <li>
+    <strong>Image:</strong>
+    <%= @event.image %>
+  </li>
+</ul>
+
+<span>
+  <%= live_patch("Edit", to: Routes.event_show_path(@socket, :edit, @event), class: "button") %>
+</span>
+|
+<span><%= live_redirect("Back", to: Routes.event_index_path(@socket, :index)) %></span>

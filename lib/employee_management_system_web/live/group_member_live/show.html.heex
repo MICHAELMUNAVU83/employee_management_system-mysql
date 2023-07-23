@@ -1,0 +1,43 @@
+<h1>Show Group member</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.group_member_show_path(@socket, :show, @group_member)}>
+    <.live_component
+      module={EmployeeManagementSystemWeb.GroupMemberLive.FormComponent}
+      id={@group_member.id}
+      title={@page_title}
+      action={@live_action}
+      group_member={@group_member}
+      return_to={Routes.group_member_show_path(@socket, :show, @group_member)}
+    />
+  </.modal>
+<% end %>
+
+<%= if @live_action in [:addgroupmember] do %>
+  <.modal return_to={Routes.group_member_index_path(@socket, :index)}>
+    <.live_component
+      module={EmployeeManagementSystemWeb.GroupMemberLive.FormComponent}
+      id={@group_member.id || :new}
+      title={@page_title}
+      action={@live_action}
+      group_member={@group_member}
+      return_to={Routes.group_member_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+  <li>
+    <strong>Member:</strong>
+    <%= @group_member.member %>
+  </li>
+</ul>
+
+<span>
+  <%= live_patch("Edit",
+    to: Routes.group_member_show_path(@socket, :edit, @group_member),
+    class: "button"
+  ) %>
+</span>
+|
+<span><%= live_redirect("Back", to: Routes.group_member_index_path(@socket, :index)) %></span>

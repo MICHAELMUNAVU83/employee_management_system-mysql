@@ -1,0 +1,227 @@
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.event_index_path(@socket, :index)}>
+    <.live_component
+      module={EmployeeManagementSystemWeb.EventLive.FormComponent}
+      id={@event.id || :new}
+      title={@page_title}
+      action={@live_action}
+      event={@event}
+      return_to={Routes.event_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+<%!-- 
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Date</th>
+      <th>Image</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="events">
+    <%= for event <- @events do %>
+      <tr id={"event-#{event.id}"}>
+        <td><%= event.name %></td>
+        <td><%= event.description %></td>
+        <td><%= event.date %></td>
+        <td><%= event.image %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.event_show_path(@socket, :show, event) %></span>
+          <span><%= live_patch "Edit", to: Routes.event_index_path(@socket, :edit, event) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: event.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Event", to: Routes.event_index_path(@socket, :new) %></span> --%>
+
+<div class="flex poppins-regular justify-between h-[100vh]">
+  <div class="md:w-1/12 w-2/12 bg-[#37404A] poppins-regular  h-[100vh] flex flex-col items-center justify-between py-8 ">
+    <div class="p-4">
+      <%= live_redirect(to: Routes.page_index_path(@socket, :index)) do %>
+        <%= Heroicons.icon("chat-bubble-left-right",
+          type: "solid",
+          class: "h-8 text-[#7269EF] w-8"
+        ) %>
+      <% end %>
+    </div>
+
+    <div class="flex flex-col items-center justify-center gap-4">
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= live_redirect(to: Routes.chat_index_path(@socket, :index)) do %>
+          <%= Heroicons.icon("chat-bubble-oval-left-ellipsis",
+            type: "solid",
+            class:
+              "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= live_redirect(to: Routes.group_index_path(@socket, :index)) do %>
+          <%= Heroicons.icon("user-group",
+            type: "solid",
+            class:
+              "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+
+      <%= if @current_user.role == "manager" do %>
+        <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+          <%= live_redirect(to: Routes.task_index_path(@socket, :index)) do %>
+            <%= Heroicons.icon("briefcase",
+              type: "solid",
+              class:
+                "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+            ) %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+          <%= live_redirect(to: Routes.task_mytasks_path(@socket, :show, @current_user))  do %>
+            <%= Heroicons.icon("rectangle-stack",
+              type: "solid",
+              class:
+                "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+            ) %>
+          <% end %>
+        </div>
+      <% end %>
+      <%= if @current_user.role == "manager" do %>
+        <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+          <%= live_redirect(to: Routes.chat_index_path(@socket, :newgroup)) do %>
+            <%= Heroicons.icon("plus",
+              type: "solid",
+              class:
+                "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+            ) %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= live_redirect(to: Routes.event_index_path(@socket, :index)) do %>
+          <%= Heroicons.icon("calendar-days",
+            type: "solid",
+            class: "h-8  text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+
+      <%= if @current_user.email == "admin@gmail.com" do %>
+        <div class="flex flex-col items-center justify-center gap-4">
+          <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+            <%= live_redirect(to: Routes.admin_panel_index_path(@socket, :index)) do %>
+              <%= Heroicons.icon("building-library",
+                type: "solid",
+                class:
+                  "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+              ) %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex flex-col justify-center items-center gap-4">
+      <div class="hover:bg-[#3E4A56] transition-all duration-500 ease-in-out group p-4 cursor-pointer rounded-xl">
+        <%= link(to: Routes.user_session_path(@socket, :delete), method: :delete) do %>
+          <%= Heroicons.icon("power",
+            type: "solid",
+            class:
+              "h-8  text-[#A6B0CF] group-hover:text-[#7269EF] transition-all duration-500 ease-in-out rounded-xl w-8"
+          ) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="md:w-11/12 w-10/12 bg-[#262E35]  overflow-y-scroll h-[100vh] flex flex-col">
+    <div class="bg-[rgb(38,46,53)] border-gray-200 border-b-2 flex justify-between items-center  p-4  h-[10%] W-[100%]">
+      <div class="flex gap-2 items-center">
+        <div class=" w-[40px] h-[40px]  ">
+          <%= img_tag(
+            EmployeeManagementSystem.ProfilePhoto.url({@current_user.photo, {@current_user}},
+              signed: true
+            ),
+            class: " w-[40px] h-[40px] object-cover  rounded-full "
+          ) %>
+        </div>
+        <p class="text-white text-sm poppins-regular">
+          <%= @current_user.first_name <> " " <> @current_user.last_name %>
+        </p>
+      </div>
+      <%= if @current_user.role == "manager" do %>
+        <div class="flex text-white items-center gap-2">
+          <%= live_patch  to: Routes.event_index_path(@socket, :new) do %>
+            <%= Heroicons.icon("plus",
+              type: "solid",
+              class: "h-8 text-[#7269EF] w-8"
+            ) %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="h-[90%] overflow-y-scroll  md:grid grid-cols-2 gap-8 p-4">
+      <%= for event <- @events do %>
+        <div class=" p-4 h-[220px] rounded-md bg-[#303841]">
+          <div class="w-[100%] bg-[#37404A] flex poppins-regular flex-col justify-between gap-1 p-2 shadow-md hover:shadow-gray-300   cursor-pointer transition-all ease-in-out duration-500 md:h-[170px]">
+            <div class="flex flex-row justify-between gap-1 w-[100%]">
+              <div class="flex flex-col">
+                <div class="flex  w-[100%] items-center">
+                  <p class="text-[#7269EF] uppercase text-xl">
+                    <%= event.name %>
+                  </p>
+                </div>
+                <div class="text-[#EFF2F7] flex gap-2 break-words ">
+                  <p text-[#7269EF]>
+                    Date :
+                  </p>
+                  <p>
+                    <%= event.date %>
+                  </p>
+                </div>
+                <div class="text-[#EFF2F7] break-words text-sm">
+                  <%= event.description %>
+                </div>
+                <%= if @current_user.role == "manager" do %>
+                  <div class="flex gap-2 items-end mt-4 ">
+                    <%= live_patch(to: Routes.event_index_path(@socket, :edit, event)) do %>
+                      <%= Heroicons.icon("pencil",
+                        type: "solid",
+                        class: "h-6 text-white w-6"
+                      ) %>
+                    <% end %>
+
+                    <%= link(
+                    to: "#",
+                    phx_click: "delete",
+                    phx_value_id: event.id,
+                    data: [confirm: "Are you sure?"]
+                  ) do %>
+                      <%= Heroicons.icon("trash",
+                        type: "solid",
+                        class: "h-6 text-white w-6"
+                      ) %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+              <div>
+                <img src={event.image} class="w-[150px] h-[150px] rounded-md object-cover " />
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
