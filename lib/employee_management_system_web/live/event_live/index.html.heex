@@ -10,37 +10,7 @@
     />
   </.modal>
 <% end %>
-<%!-- 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Date</th>
-      <th>Image</th>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="events">
-    <%= for event <- @events do %>
-      <tr id={"event-#{event.id}"}>
-        <td><%= event.name %></td>
-        <td><%= event.description %></td>
-        <td><%= event.date %></td>
-        <td><%= event.image %></td>
-
-        <td>
-          <span><%= live_redirect "Show", to: Routes.event_show_path(@socket, :show, event) %></span>
-          <span><%= live_patch "Edit", to: Routes.event_index_path(@socket, :edit, event) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: event.id, data: [confirm: "Are you sure?"] %></span>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<span><%= live_patch "New Event", to: Routes.event_index_path(@socket, :new) %></span> --%>
 
 <div class="flex poppins-regular justify-between h-[100vh]">
   <div class="md:w-1/12 w-2/12 bg-[#37404A] poppins-regular  h-[100vh] flex flex-col items-center justify-between py-8 ">

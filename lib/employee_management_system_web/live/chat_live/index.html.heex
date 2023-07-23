@@ -12,29 +12,7 @@
     />
   </.modal>
 <% end %>
-<%!-- 
-<%= for user <- @users do %>
-  <%= live_redirect("Chat", to: Routes.chat_show_path(@socket, :show, user)) %>
-  <%= user.email %>
-  <div class="flex justify-end p-4 gap-2 items-center">
-    <%= user.email %>
 
-    <%= img_tag(
-      EmployeeManagementSystem.ProfilePhoto.url({user.photo, {user}},
-        signed: true
-      ),
-      class: "h-[50px] w-[50px] border-2 border-green-400 rounded-full  object-cover"
-    ) %>
-  </div>
-<% end %> --%>
-<%!-- Groups
-<%= for group <- @groups do %>
-  <%= group.name %>
-  <%= live_redirect("Show", to: Routes.group_show_path(@socket, :show, group)) %>
-<% end %>
---%>
-
-<%!-- <%= live_redirect("Create Group", to: Routes.chat_index_path(@socket, :newgroup)) %>  --%>
 <div class="flex justify-between poppins-regular h-[100vh]">
   <div class="md:w-1/12 w-2/12 bg-[#37404A] poppins-regular  h-[100vh] flex flex-col items-center justify-between py-8 ">
     <div class="p-4">

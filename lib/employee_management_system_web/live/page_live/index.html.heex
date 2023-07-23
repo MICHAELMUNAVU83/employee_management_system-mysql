@@ -1,18 +1,4 @@
-<%!-- hbnjmk,l <%= live_redirect("Chats", to: Routes.chat_index_path(@socket, :index)) %>
 
-<%= live_redirect("Tasks", to: Routes.task_index_path(@socket, :index)) %>
-
-<ul>
-  <%= if @current_user != "" do %>
-    <li><%= link("Settings", to: Routes.user_settings_path(@socket, :edit)) %></li>
-    <li>
-      <%= link("Log out", to: Routes.user_session_path(@socket, :delete), method: :delete) %>
-    </li>
-  <% else %>
-    <li><%= link("Register", to: Routes.user_registration_path(@socket, :new)) %></li>
-    <li><%= link("Log in", to: Routes.user_session_path(@socket, :new)) %></li>
-  <% end %>
-</ul> --%>
 
 <div class="h-[100vh] w-[100%] bg-gradient-to-b from-[#37404A]  via-[#7269EF]  to-[#262E35]">
   <div class="bg-black/50 h-[100vh] py-8 flex justify-between flex-col items-center w-[100%]">

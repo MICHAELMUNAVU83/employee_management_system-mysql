@@ -30,52 +30,7 @@
     />
   </.modal>
 <% end %>
-<%!-- 
-<ul>
-  <li>
-    <strong>Name:</strong>
-    <%= @group.name %>
-  </li>
 
-  <li>
-    <strong>Description:</strong>
-    <%= @group.description %>
-  </li>
-
-  <li>
-    <strong>Department:</strong>
-    <%= @group.department %>
-  </li>
-</ul>
-
-<span>
-  <%= live_patch("Edit", to: Routes.group_show_path(@socket, :edit, @group), class: "button") %>
-</span>
-|
-<span><%= live_redirect("Back", to: Routes.chat_index_path(@socket, :index)) %></span>
-
-
-
-<.form let={f} for={@group_message_changeset} id="group_message-form" phx-submit="save_message">
-  <%= label(f, :text) %>
-  <%= text_input(f, :text) %>
-  <%= error_tag(f, :text) %>
-
-  <div>
-    <%= submit("Save", phx_disable_with: "Saving...") %>
-  </div>
-</.form>
-
-<h1 class="text-3xl font-bold">
-  Messages
-</h1>
-
-<%= for message <- @group_messages do %>
-  <div>
-    <span><%= message.text %></span>
-    <span><%= message.inserted_at %></span>
-  </div>
-<% end %> --%>
 
 <div class="flex justify-between poppins-regular h-[100vh]">
   <div class="md:w-1/12 w-2/12 bg-[#37404A] poppins-regular  h-[100vh] flex flex-col items-center justify-between py-8 ">

@@ -45,11 +45,17 @@ defmodule EmployeeManagementSystemWeb.GroupLive.Show do
     groups_for_user = Groups.list_groups_for_a_member(socket.assigns.current_user.id)
     all_groups = Groups.list_groups()
 
+    all_groups_in_my_department =
+      Groups.list_groups()
+      |> Enum.filter(fn group -> group.department == socket.assigns.current_user.department end)
+
     groups =
-      if socket.assigns.current_user.email == "admin@gmail.com" do
-        all_groups
-      else
-        groups_for_user
+      case socket.assigns.current_user.role do
+        "manager" ->
+          all_groups_in_my_department
+
+        _ ->
+          groups_for_user
       end
 
     all_users =

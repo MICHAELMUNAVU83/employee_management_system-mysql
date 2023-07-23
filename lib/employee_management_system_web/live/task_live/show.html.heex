@@ -42,48 +42,6 @@
   </.modal>
 <% end %>
 
-<%!-- 
-<%= live_redirect("New task", to: Routes.task_show_path(@socket, :newtask, @user.id)) %>  --%>
-
-<%!-- <table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Due date</th>
-      <th>Status</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="tasks">
-    <%= for task <- @tasks do %>
-      <tr id={"task-#{task.id}"}>
-        <td><%= task.title %></td>
-        <td><%= task.description %></td>
-        <td><%= task.due_date %></td>
-        <td><%= task.status %></td>
-
-        <td>
-          <span>
-            <%= live_patch("Edit",
-              to: Routes.task_show_path(@socket, :edit, @user.id, task.id)
-            ) %>
-          </span>
-
-          <span>
-            <%= link("Delete",
-              to: "#",
-              phx_click: "delete",
-              phx_value_id: task.id,
-              data: [confirm: "Are you sure?"]
-            ) %>
-          </span>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table> --%>
 
 <div class="flex justify-between poppins-regular h-[100vh]">
   <div class="md:w-1/12 w-2/12 bg-[#37404A] poppins-regular  h-[100vh] flex flex-col items-center justify-between py-8 ">
@@ -427,7 +385,7 @@
                   </div>
 
                   <div class="flex flex-row">
-                    <%!-- stars here  --%>
+                
 
                     <%= for i <- 1..review.score do %>
                       <%= Heroicons.icon("star",

@@ -1,40 +1,4 @@
-<%!-- <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Department</th>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="groups">
-    <%= for group <- @groups do %>
-      <tr id={"group-#{group.id}"}>
-        <td><%= group.name %></td>
-        <td><%= group.description %></td>
-        <td><%= group.department %></td>
-
-        <td>
-          <span>
-            <%= live_redirect("Show", to: Routes.group_show_path(@socket, :show, group)) %>
-          </span>
-          <span>
-            <%= live_patch("Edit", to: Routes.group_index_path(@socket, :edit, group)) %>
-          </span>
-          <span>
-            <%= link("Delete",
-              to: "#",
-              phx_click: "delete",
-              phx_value_id: group.id,
-              data: [confirm: "Are you sure?"]
-            ) %>
-          </span>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table> --%>
 
 <div class="flex justify-between h-[100vh]">
   <div class="md:w-1/12 w-2/12 bg-[#37404A] poppins-regular  h-[100vh] flex flex-col items-center justify-between py-8 ">
